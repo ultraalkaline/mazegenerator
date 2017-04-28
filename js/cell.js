@@ -42,7 +42,7 @@ function Cell(cols, rows) {
         var x = this.cols * scl;
         var y = this.rows * scl;
         stroke(229, 144, 0, 255);
-        strokeWeight(2);
+        strokeWeight(strokeweight);
 
         if (this.walls[0]) {
             // Top Left -> Top Right
@@ -88,8 +88,8 @@ function Cell(cols, rows) {
     this.highlight = function() {
         var x = this.cols * scl;
         var y = this.rows * scl;
-        noStroke();
-        fill(0, 0, 255, 100);
+        stroke(0, 0, 255, 100);
+        noFill();
         rect(x, y, scl, scl);
     }
 }

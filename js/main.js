@@ -7,9 +7,9 @@
  */
 
 var canvas;
-var framerate = 120;
+var fr = 10;
 
-var scl = 20;
+var scl = 40;
 var cols, rows;
 
 var grid = [];
@@ -18,12 +18,18 @@ var stack = [];
 var current;
 var textBox;
 
+var controlWidth = 600;
+var controlHeight = 600;
+var strokeweight = 4;
+// actual width and height should be relative to the strokeWeight.
+var mazeWidth = controlWidth + strokeweight;
+var mazeHeight = controlHeight + strokeweight;
+
 function setup() {
-    createCanvas(windowWidth, windowHeight);
-   canvas = createCanvas(601, 601);
+   canvas = createCanvas(mazeWidth, mazeHeight);
 
    fixCanvas();
-   frameRate(framerate);
+   frameRate(fr);
 
    cols = floor(width / scl);
    rows = floor(height / scl);
@@ -39,14 +45,15 @@ function setup() {
 }
 
 function draw() {
-    background(51);
-    background(0);
+    background(0, 0);
+    clear();
+
+    translate(strokeweight/2, strokeweight/2);
 
     if (keyIsDown(UP_ARROW))
         frameRate(updateFrameRate("up"));
     else if (keyIsDown(DOWN_ARROW))
         frameRate(updateFrameRate("down"));
-    frameRateTextBox(framerate);
 
     for (var i = 0; i < grid.length; i++) {
         grid[i].show();
@@ -71,12 +78,10 @@ function draw() {
     }
 }
 
-function windowResized() {
-    fixCanvas();
-}
+
 
 function fixCanvas() {
-    canvas.position(windowWidth/2 - 601/2, 0);
+    canvas.position(windowWidth/2 - mazeWidth/2, windowHeight/2 - mazeHeight/2);
 }
 
 function index(i, j) {
@@ -118,19 +123,13 @@ function removeWalls(a, b) {
 }
 
 function updateFrameRate(key) {
-    if (framerate < 120 && key == "up") {
-        var upFrameRate = framerate++;
+    if (fr < 120 && key == "up") {
+        var upFrameRate = fr++;
         return upFrameRate;
-    } else if (framerate > 0 && key == "down") {
-        var downFrameRate = framerate--;
+    } else if (fr > 0 && key == "down") {
+        var downFrameRate = fr--;
         return downFrameRate;
     } else {
-        return framerate;
+        return fr;
     }
-}
-
-function frameRateTextBox(framerate) {
-    fill(255);
-    textSize(64);
-    textBox = text("Framerate: " + framerate, windowWidth - 500 , windowHeight/2, 500, 100);
 }
