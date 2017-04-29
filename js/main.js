@@ -18,35 +18,40 @@ var stack = [];
 var current;
 var textBox;
 
-var controlWidth = 600;
-var controlHeight = 600;
+var mazeWidth, mazeHeight;
 var strokeweight = 4;
-// actual width and height should be relative to the strokeWeight.
-var mazeWidth = controlWidth + strokeweight;
-var mazeHeight = controlHeight + strokeweight;
+
+var mazeColor = new Array(3);
 
 function setup() {
+   mazeHeight = (Math.ceil((windowHeight - 100)  / scl) * scl) + strokeweight;
+   mazeWidth = mazeHeight;
    canvas = createCanvas(mazeWidth, mazeHeight);
+   canvas.id('canvas');
 
-   fixCanvas();
    frameRate(fr);
 
-   cols = floor(width / scl);
-   rows = floor(height / scl);
+   cols = floor(mazeWidth / scl);
+   rows = floor(mazeHeight / scl);
 
-   for (var r = 0; r < rows; r++) {
-       for (var c = 0; c < cols; c++) {
-           var cell = new Cell(r, c);
-           grid.push(cell);
-       }
-   }
-   // STEP 1 PART 1
-   current = grid[0];
+   initMaze();
+
+   $("#regen-button").click(function() {
+       initMaze();
+   });
+
+   setTimeout(function() {
+       $("#tip").fadeToggle();
+   }, 5000);
+
 }
 
 function draw() {
-    background(0, 0);
-    clear();
+    background(0);
+
+    mazeColor[0] = parseInt($("[name='colorR']").val());
+    mazeColor[1] = parseInt($("[name='colorG']").val());
+    mazeColor[2] = parseInt($("[name='colorB']").val());
 
     translate(strokeweight/2, strokeweight/2);
 
@@ -78,10 +83,17 @@ function draw() {
     }
 }
 
+function initMaze() {
+    grid = [];
 
-
-function fixCanvas() {
-    canvas.position(windowWidth/2 - mazeWidth/2, windowHeight/2 - mazeHeight/2);
+    for (var r = 0; r < rows; r++) {
+        for (var c = 0; c < cols; c++) {
+            var cell = new Cell(r, c);
+            grid.push(cell);
+        }
+    }
+    // STEP 1 PART 1
+    current = grid[0];
 }
 
 function index(i, j) {

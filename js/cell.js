@@ -4,6 +4,7 @@ function Cell(cols, rows) {
     this.walls = [true, true, true, true];
     this.visited = false;
 
+
     this.checkNeighbors = function() {
         var neighbors = [];
 
@@ -41,7 +42,7 @@ function Cell(cols, rows) {
     this.show = function() {
         var x = this.cols * scl;
         var y = this.rows * scl;
-        stroke(229, 144, 0, 255);
+        stroke(mazeColor[0], mazeColor[1], mazeColor[2], 255);
         strokeWeight(strokeweight);
 
         if (this.walls[0]) {
