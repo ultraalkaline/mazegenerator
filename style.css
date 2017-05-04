@@ -8,6 +8,15 @@
     to {opacity: 1}
 }
 
+*:not(.selectable) {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 html, body {
     width: 100%;
     height: auto;
@@ -44,25 +53,65 @@ html, body {
 
 #color {
     position: absolute;
-    display: inline-block;
-    left: 10em;
+    display: block;
+    left: 5em;
     top: 50%;
     transform: translateY(-50%);
 }
 
 #color-title {
     position: relative;
+    display: block;
     font-family: defFont;
     font-size: 1.3em;
     font-style: italic;
     color: #d5d5d5;
-    float: right;
+    text-align: center;
+}
+
+#color-presets {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+#color-presets li {
+    margin: 0.2em;
+    padding: 0.2em;
+    font-family: defFont;
+    color: #212121;
+    text-align: center;
+    line-height: 5em;
+    width: 5em;
+    height: 5em;
+    background: #FF0000;
+    cursor: pointer;
+
+    transition: border-radius 200ms ease;
+}
+
+.color-active {
+    border-radius: 10px;
+}
+
+#color-presets li span {
+    display: inline-block;
+    font-size: 0.6em;
+    vertical-align: middle;
+    line-height: normal;
+}
+
+#color-custom {
+    display: none;
+    margin-top: 2.5em;
 }
 
 .color-container {
     position: relative;
     color: #FFF;
-    padding: 0 0.5em;
 }
 
 .color-container p {
@@ -96,27 +145,39 @@ html, body {
     float: right;
 }
 
+button {
+    font-size: 1.5em;
+    font-family: defFont;
+    text-align: center;
+    padding: 0.5em;
+    border: none;
+    background-color: #d1d1d1;
+    cursor: pointer;
+    transition: border-radius 200ms ease, background-color 200ms ease;
+}
+
+button:active {
+    border-radius: 10px;
+    background-color: #FFF;
+}
+
+button:focus {
+    outline: none;
+}
+
 #regen-button {
     position: absolute;
     right: 10em;
     top: 50%;
-    font-size: 1.5em;
-    font-family: defFont;
-    padding: 0.5em;
-    border: none;
-    background-color: #FFF;
-    border-radius: 10px;
     transform: translateY(-50%);
-    cursor: pointer;
-
-    transition: border-radius 200ms ease, background-color 200ms ease;
 }
 
-#regen-button:active {
-    border-radius: 0;
-    background-color: #f5f5f5;
-}
+#color-custom-button {
+    position: relative;
+    display: block;
+    top: 1em;
+    font-size: 1.2em;
+    left: 50%;
+    transform: translateX(-50%);
 
-#regen-button:focus {
-    outline: none;
 }

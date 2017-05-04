@@ -23,6 +23,11 @@ var strokeweight = 4;
 
 var mazeColor = new Array(3);
 
+var $rControl;
+var $gControl;
+var $bControl;
+
+
 function setup() {
    mazeHeight = (Math.ceil((windowHeight - 100)  / scl) * scl) + strokeweight;
    mazeWidth = mazeHeight;
@@ -36,6 +41,10 @@ function setup() {
 
    initMaze();
 
+   $rControl = $("[name='colorR']");
+   $gControl = $("[name='colorG']");
+   $bControl = $("[name='colorB']");
+
    $("#regen-button").click(function() {
        initMaze();
    });
@@ -44,14 +53,20 @@ function setup() {
        $("#tip").fadeToggle();
    }, 5000);
 
+   setupColorPresets();
+
+   $("#color-presets li").click(function() {
+       colorPresetClick($(this).find("span").text(), $(this).attr('id'));
+   });
+
 }
 
 function draw() {
     background(0);
 
-    mazeColor[0] = parseInt($("[name='colorR']").val());
-    mazeColor[1] = parseInt($("[name='colorG']").val());
-    mazeColor[2] = parseInt($("[name='colorB']").val());
+    mazeColor[0] = parseInt($rControl.val());
+    mazeColor[1] = parseInt($gControl.val());
+    mazeColor[2] = parseInt($bControl.val());
 
     translate(strokeweight/2, strokeweight/2);
 
@@ -143,5 +158,27 @@ function updateFrameRate(key) {
         return downFrameRate;
     } else {
         return fr;
+    }
+}
+
+function setupColorPresets() {
+    $("#color-presets li").each(function(index, element) {
+        $(element).css("background", "rgb" + $(element).text());
+    });
+}
+
+function customColorButton() {
+    $("#color-custom").fadeToggle(200);
+}
+
+function colorPresetClick(rgb, elementID) {
+    var numPattern = /\d+/g;
+    $rControl.val(rgb.match(numPattern)[0]);
+    $gControl.val(rgb.match(numPattern)[1]);
+    $bControl.val(rgb.match(numPattern)[2]);
+
+    if (!$("#" + elementID).hasClass('color-active')) {
+        $("#color-presets li").removeClass('color-active');
+        $("#" + elementID).addClass('color-active');
     }
 }

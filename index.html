@@ -25,17 +25,34 @@
     <h3 id="tip">tip: hold <span>arrow_up</span> or <span>arrow_down</span> to change the framerate. kthx.</h3>
     <div id="color">
         <p id="color-title">maze color.</p>
-        <div id="color-red-container" class="color-container">
-            <p>r: </p>
-            <input class="color-input" type="number" name="colorR" value="255" max="255" min="0">
-        </div>
-        <div id="color-green-container" class="color-container">
-            <p>g: </p>
-            <input class="color-input" type="number" name="colorG" value="255" max="255" min="0">
-        </div>
-        <div id="color-blue-container" class="color-container">
-            <p>b: </p>
-            <input class="color-input" type="number" name="colorB" value="255" max="255" min="0">
+
+        <ul id="color-presets">
+            <li id="red"><span>(255, 0, 0)</span></li>
+            <li id="green"><span>(0, 255, 0)</span></li>
+            <li id="blue"><span>(0, 0, 255)</span></li>
+            <li id="white" class="color-active"><span>(255, 255, 255)</span></li>
+            <li id="yellow"><span>(255, 255, 0)</span></li>
+            <li id="cyan"><span>(0, 255, 255)</span></li>
+            <li id="magenta"><span>(255, 0, 255)</span></li>
+            <li id="pink"><span>(255, 0, 128)</span></li>
+            <li id="orange"><span>(255, 128, 0)</span></li>
+        </ul>
+
+        <button id="color-custom-button" type="button" onclick="customColorButton()">custom color.</button>
+
+        <div id="color-custom">
+            <div id="color-red-container" class="color-container">
+                <p>r: </p>
+                <input class="color-input" type="number" name="colorR" value="255" max="255" min="0">
+            </div>
+            <div id="color-green-container" class="color-container">
+                <p>g: </p>
+                <input class="color-input" type="number" name="colorG" value="255" max="255" min="0">
+            </div>
+            <div id="color-blue-container" class="color-container">
+                <p>b: </p>
+                <input class="color-input" type="number" name="colorB" value="255" max="255" min="0">
+            </div>
         </div>
     </div>
     <button id="regen-button" type="button">regen.</button>
