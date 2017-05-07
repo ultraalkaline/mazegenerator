@@ -22,8 +22,13 @@
 </head>
 
 <body>
-    <h3 id="tip">tip: hold <span>arrow_up</span> or <span>arrow_down</span> to change the framerate. kthx.</h3>
-    <div id="color">
+    <div id="ui-toggle-container">
+        <button id="ui-toggle-button" type="button" onclick="uiToggle()">ui.</button>
+        <h3 id="ui-tip" class="tip">tip: use this button to toggle the ui.</h3>
+    </div>
+
+    <h3 id="fr-tip" class="tip">tip: hold <span>arrow_up</span> or <span>arrow_down</span> to change the framerate. kthx.</h3>
+    <div id="color" class="ui">
         <p id="color-title">maze color.</p>
 
         <ul id="color-presets">
@@ -55,6 +60,7 @@
             </div>
         </div>
     </div>
-    <button id="regen-button" type="button">regen.</button>
+    <div id="framerate-counter" class="ui">framerate: 10.</div>
+    <button id="regen-button" class="ui" type="button">regen.</button>
 </body>
 </html>

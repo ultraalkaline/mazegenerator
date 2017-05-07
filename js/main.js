@@ -27,37 +27,45 @@ var $rControl;
 var $gControl;
 var $bControl;
 
+var $frCounter;
 
 function setup() {
-   mazeHeight = (Math.ceil((windowHeight - 100)  / scl) * scl) + strokeweight;
-   mazeWidth = mazeHeight;
-   canvas = createCanvas(mazeWidth, mazeHeight);
-   canvas.id('canvas');
+    if (windowHeight < windowWidth) {
+        mazeHeight = (Math.ceil((windowHeight - 100)  / scl) * scl) + strokeweight;
+        mazeWidth = mazeHeight;
+    } else {
+        mazeWidth = (Math.ceil((windowWidth - 100) / scl) * scl) + strokeweight;
+        mazeHeight = mazeWidth;
+    }
+    canvas = createCanvas(mazeWidth, mazeHeight);
+    canvas.id('canvas');
 
-   frameRate(fr);
+    frameRate(fr);
 
-   cols = floor(mazeWidth / scl);
-   rows = floor(mazeHeight / scl);
+    cols = floor(mazeWidth / scl);
+    rows = floor(mazeHeight / scl);
 
-   initMaze();
+    initMaze();
 
-   $rControl = $("[name='colorR']");
-   $gControl = $("[name='colorG']");
-   $bControl = $("[name='colorB']");
+    $rControl = $("[name='colorR']");
+    $gControl = $("[name='colorG']");
+    $bControl = $("[name='colorB']");
 
-   $("#regen-button").click(function() {
-       initMaze();
-   });
+    $frCounter = $("#framerate-counter");
 
-   setTimeout(function() {
-       $("#tip").fadeToggle();
-   }, 5000);
+    $("#regen-button").click(function() {
+        initMaze();
+    });
 
-   setupColorPresets();
+    setTimeout(function() {
+        $(".tip").fadeToggle();
+    }, 5000);
 
-   $("#color-presets li").click(function() {
-       colorPresetClick($(this).find("span").text(), $(this).attr('id'));
-   });
+    setupColorPresets();
+
+    $("#color-presets li").click(function() {
+        colorPresetClick($(this).find("span").text(), $(this).attr('id'));
+    });
 
 }
 
@@ -70,10 +78,13 @@ function draw() {
 
     translate(strokeweight/2, strokeweight/2);
 
-    if (keyIsDown(UP_ARROW))
+    if (keyIsDown(UP_ARROW)) {
         frameRate(updateFrameRate("up"));
-    else if (keyIsDown(DOWN_ARROW))
+        $frCounter.html("framerate: " + updateFrameRate("up") + ".");
+    } else if (keyIsDown(DOWN_ARROW)) {
         frameRate(updateFrameRate("down"));
+        $frCounter.html("framerate: " + updateFrameRate("down") + ".");
+    }
 
     for (var i = 0; i < grid.length; i++) {
         grid[i].show();
@@ -139,6 +150,10 @@ function removeWalls(a, b) {
         b.walls[0] = false;
     }
 
+    /*
+        MODIFIABLE
+    */
+
     // Starting cell
     if (a.cols == 0 && a.rows == 0) {
         a.walls[3] = false;
@@ -181,4 +196,8 @@ function colorPresetClick(rgb, elementID) {
         $("#color-presets li").removeClass('color-active');
         $("#" + elementID).addClass('color-active');
     }
+}
+
+function uiToggle() {
+    $(".ui").not('#color-custom').fadeToggle(200);
 }
