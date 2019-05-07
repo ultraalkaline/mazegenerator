@@ -29,6 +29,8 @@ var $bControl;
 
 var $frCounter;
 
+var path = [];
+
 function setup() {
     if (windowHeight < windowWidth) {
         mazeHeight = (Math.ceil((windowHeight - 100)  / scl) * scl) + strokeweight;
@@ -37,6 +39,7 @@ function setup() {
         mazeWidth = (Math.ceil((windowWidth - 100) / scl) * scl) + strokeweight;
         mazeHeight = mazeWidth;
     }
+    console.log("mazeWidth: " + mazeWidth + ", mazeHeight: " + mazeHeight);
     canvas = createCanvas(mazeWidth, mazeHeight);
     canvas.id('canvas');
 
@@ -111,6 +114,7 @@ function draw() {
 
 function initMaze() {
     grid = [];
+    path = [];
 
     for (var r = 0; r < rows; r++) {
         for (var c = 0; c < cols; c++) {
@@ -131,7 +135,7 @@ function index(i, j) {
 
 function removeWalls(a, b) {
     // Right or left neighbor(s)
-    var x = a.cols - b.cols;
+    var x = a.col - b.col;
     if (x === 1) {
         a.walls[3] = false;
         b.walls[1] = false;
@@ -141,7 +145,7 @@ function removeWalls(a, b) {
     }
 
     // Top or bottom neighbor(s)
-    var y = a.rows - b.rows;
+    var y = a.row - b.row;
     if (y === 1) {
         a.walls[0] = false;
         b.walls[2] = false;
@@ -154,12 +158,14 @@ function removeWalls(a, b) {
         MODIFIABLE
     */
 
-    // Starting cell
-    if (a.cols == 0 && a.rows == 0) {
+    // Starting cell (col = 0, row = 0)
+    if (a.col == 0 && a.row == 0) {
+        // Remove the left wall.
         a.walls[3] = false;
     }
-    // Ending cell
-    if (b.cols == cols - 1 && b.rows == rows - 1) {
+    // Ending cell (col = cols - 1, row = rows - 1)
+    if (b.col == cols - 1 && b.row == rows - 1) {
+        // Remove the right wall.
         b.walls[1] = false;
     }
 }

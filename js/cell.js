@@ -1,31 +1,38 @@
-function Cell(cols, rows) {
-    this.cols = cols;
-    this.rows = rows;
+function Cell(col, row) {
+    this.col = col;
+    this.row = row;
     this.walls = [true, true, true, true];
     this.visited = false;
-
 
     this.checkNeighbors = function() {
         var neighbors = [];
 
         // Top neighbor.
-        var top     = grid[index(rows    , cols - 1)];
+        var top     = grid[index(row    , col - 1)];
         // Right neighbor.
-        var right   = grid[index(rows + 1, cols    )];
+        var right   = grid[index(row + 1, col    )];
         // Bottom neighbor.
-        var bottom  = grid[index(rows    , cols + 1)];
+        var bottom  = grid[index(row    , col + 1)];
         // Left neighbor.
-        var left    = grid[index(rows - 1, cols    )];
+        var left    = grid[index(row - 1, col    )];
 
+        // If the top neighbor exists and isn't visited,
+        // push it to the array of neighbors.
         if (top && !top.visited) {
             neighbors.push(top);
         }
+        // If the right neighbor exists and isn't visited,
+        // push it to the array of neighbors.
         if (right && !right.visited) {
             neighbors.push(right);
         }
+        // If the bottom neighbor exists and isn't visited,
+        // push it to the array of neighbors.
         if (bottom && !bottom.visited) {
             neighbors.push(bottom);
         }
+        // If the left neighbor exists and isn't visited,
+        // push it to the array of neighbors.
         if (left && !left.visited) {
             neighbors.push(left);
         }
@@ -37,11 +44,13 @@ function Cell(cols, rows) {
         } else {
             return undefined;
         }
+
+        console.log("Neighbors: " + neighbors);
     }
 
     this.show = function() {
-        var x = this.cols * scl;
-        var y = this.rows * scl;
+        var x = this.col * scl;
+        var y = this.row * scl;
         stroke(mazeColor[0], mazeColor[1], mazeColor[2], 255);
         strokeWeight(strokeweight);
 
@@ -83,14 +92,25 @@ function Cell(cols, rows) {
             stroke(255, 0);
             noFill();
             rect(x, y, scl, scl);
+            textSize(10);
+            var tx = x + strokeweight;
+            var ty = y + strokeweight;
+            point(tx + scl / 2, ty + scl / 2);
         }
     }
 
     this.highlight = function() {
-        var x = this.cols * scl;
-        var y = this.rows * scl;
+        var x = this.col * scl;
+        var y = this.row * scl;
         stroke(0, 0, 255, 100);
         noFill();
         rect(x, y, scl, scl);
+
+        started = true;
+
+        if (!(this.col == 0 && this.row == 0)) {
+          path.push({x, y});
+        }
+
     }
 }
